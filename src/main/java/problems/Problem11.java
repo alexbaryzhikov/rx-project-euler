@@ -3,9 +3,11 @@ package problems;
 import io.reactivex.rxjava3.core.Observable;
 import util.Pair;
 
-/**
- * What is the greatest product of four adjacent numbers in the same direction (up, down, left, right, or diagonally) in the 20×20 grid?
- */
+/*
+What is the greatest product of four adjacent numbers in the same
+direction (up, down, left, right, or diagonally) in the 20×20 grid?
+*/
+
 public class Problem11 {
     private static final String data = "" +
             "08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08 " +

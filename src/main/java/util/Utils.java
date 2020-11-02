@@ -1,5 +1,7 @@
 package util;
 
+import io.reactivex.rxjava3.core.Observable;
+
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ThreadLocalRandom;
@@ -31,5 +33,28 @@ public class Utils {
 
     public static long randomLong(int from, int to) {
         return ThreadLocalRandom.current().nextLong(from, to);
+    }
+
+    public static Observable<Long> nats(long from) {
+        return Observable.generate(
+                () -> from,
+                (i, emitter) -> {
+                    emitter.onNext(i);
+                    return i + 1;
+                });
+    }
+
+    public static Observable<Long> nats(long from, long to) {
+        return Observable.generate(
+                () -> from,
+                (i, emitter) -> {
+                    if (i < to) {
+                        emitter.onNext(i);
+                        return i + 1;
+                    } else {
+                        emitter.onComplete();
+                        return 0L;
+                    }
+                });
     }
 }

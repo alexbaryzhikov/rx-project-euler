@@ -1,11 +1,13 @@
 package util;
 
-import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.*;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 public class Utils {
     private static final DateTimeFormatter f = DateTimeFormatter.ofPattern("hh:mm:ss.SSS");
@@ -56,5 +58,18 @@ public class Utils {
                         return 0L;
                     }
                 });
+    }
+
+    public static ObservableTransformer<Long, Long> upTo(long n) {
+        return upstream -> upstream.takeWhile(it -> it <= n);
+    }
+
+    public static ObservableConverter<Long, Single<Long>> product() {
+        return upstream -> upstream.reduce(1L, (a, b) -> a * b);
+    }
+
+    public static ObservableTransformer<String, String> grep(String regex) {
+        Predicate<String> p = Pattern.compile(regex).asPredicate();
+        return upstream -> upstream.filter(p::test);
     }
 }

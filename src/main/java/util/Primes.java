@@ -2,10 +2,7 @@ package util;
 
 import io.reactivex.rxjava3.core.Observable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Primes {
 
@@ -19,14 +16,19 @@ public class Primes {
         );
     }
 
-    private static class Sieve {
+    public static Iterator<Long> primesIterator() {
+        return new Sieve();
+    }
+
+    private static class Sieve implements Iterator<Long> {
         long n = 2; // next candidate number
         long p = 3; // next base prime
         long q = 9; // square of the next base prime to keep track of in the sieve
         Map<Long, Long> sieve = new HashMap<>();
         List<Long> basePrimes = new ArrayList<>();
 
-        Long next() {
+        @Override
+        public Long next() {
             if (n < 4) {
                 if (n == 2) {
                     n = 3;
@@ -60,6 +62,11 @@ public class Primes {
                 }
                 n += 2;
             }
+        }
+
+        @Override
+        public boolean hasNext() {
+            return true;
         }
     }
 }

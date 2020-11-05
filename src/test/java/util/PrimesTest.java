@@ -7,16 +7,6 @@ import static util.Primes.primes;
 import static util.Utils.upTo;
 
 public class PrimesTest {
-
-    @Test
-    public void testPrimes() {
-        String result = primes()
-                .compose(upTo(1223))
-                .collect(StringBuilder::new, (sb, i) -> sb.append(i).append(' '))
-                .blockingGet().toString();
-        assertEquals(PRIMES, result);
-    }
-
     private static final String PRIMES = "" +
             "2 3 5 7 11 13 17 19 23 29 " +
             "31 37 41 43 47 53 59 61 67 71 " +
@@ -38,4 +28,19 @@ public class PrimesTest {
             "1019 1021 1031 1033 1039 1049 1051 1061 1063 1069 " +
             "1087 1091 1093 1097 1103 1109 1117 1123 1129 1151 " +
             "1153 1163 1171 1181 1187 1193 1201 1213 1217 1223 ";
+
+    @Test
+    public void generate_primes() {
+        String result = primes()
+                .compose(upTo(1223))
+                .collect(StringBuilder::new, (sb, i) -> sb.append(i).append(' '))
+                .blockingGet().toString();
+        assertEquals(PRIMES, result);
+    }
+
+    @Test
+    public void millionth_prime() {
+        long result = primes().skip(999_999).blockingFirst();
+        assertEquals(15485863, result);
+    }
 }

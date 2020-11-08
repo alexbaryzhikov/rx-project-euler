@@ -8,19 +8,15 @@ public class Primes {
 
     public static Observable<Long> primes() {
         return Observable.generate(
-                Sieve::new,
-                (sieve, emitter) -> {
-                    emitter.onNext(sieve.next());
-                    return sieve;
+                PrimesIterator::new,
+                (primes, emitter) -> {
+                    emitter.onNext(primes.next());
+                    return primes;
                 }
         );
     }
 
-    public static Iterator<Long> primesIterator() {
-        return new Sieve();
-    }
-
-    private static class Sieve implements Iterator<Long> {
+    public static class PrimesIterator implements Iterator<Long> {
         long n = 2; // next candidate number
         long p = 3; // next base prime
         long q = 9; // square of the next base prime to keep track of in the sieve

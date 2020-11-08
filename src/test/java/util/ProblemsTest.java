@@ -23,6 +23,20 @@ public class ProblemsTest {
     }
 
     @Test
+    public void problem2() {
+        Problem2.main(null);
+        String result = stripNewline(stdOutInterceptor.capture());
+        assertEquals("4613732", result);
+    }
+
+    @Test
+    public void problem3() {
+        Problem3.main(null);
+        String result = stripNewline(stdOutInterceptor.capture());
+        assertEquals("6857", result);
+    }
+
+    @Test
     public void problem8() {
         Problem8.main(null);
         String result = stripNewline(stdOutInterceptor.capture());

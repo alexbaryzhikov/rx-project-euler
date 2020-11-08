@@ -8,13 +8,13 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import static util.Primes.primes;
-import static util.Primes.primesIterator;
 import static util.Utils.upTo;
 
 public class Factors {
     public static final String DATA_DIR = "data";
     public static final String FILE_BASE_NAME = "largest_";
-    public static int[] largest;
+    public static int[] largest = new int[0];
+    public static boolean verbose = false;
 
     public static void makeTable(int n) {
         largest = new int[n];
@@ -31,7 +31,9 @@ public class Factors {
 
         File d = new File(DATA_DIR);
         if (!d.exists() && !d.mkdir()) {
-            System.err.println("Unable to create directory " + d.getAbsolutePath());
+            if (verbose) {
+                System.err.println("Unable to create directory " + d.getAbsolutePath());
+            }
             return;
         }
         File f = new File(DATA_DIR, FILE_BASE_NAME + n);
@@ -40,7 +42,9 @@ public class Factors {
             for (int p : largest) {
                 dos.writeInt(p);
             }
-            System.out.println("Wrote to " + f.getAbsolutePath());
+            if (verbose) {
+                System.out.println("Wrote to " + f.getAbsolutePath());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,7 +58,9 @@ public class Factors {
             for (int i = 0; i < n; i++) {
                 largest[i] = dis.readInt();
             }
-            System.out.println("Read from " + f.getAbsolutePath());
+            if (verbose) {
+                System.out.println("Read from " + f.getAbsolutePath());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -62,27 +68,23 @@ public class Factors {
 
     public static Observable<Long> factors(long n) {
         return Observable.generate(
-                () -> new PrimeFactors(n),
-                (primeFactors, emitter) -> {
-                    if (primeFactors.hasNext()) {
-                        emitter.onNext(primeFactors.next());
+                () -> new FactorsIterator(n),
+                (factors, emitter) -> {
+                    if (factors.hasNext()) {
+                        emitter.onNext(factors.next());
                     } else {
                         emitter.onComplete();
                     }
-                    return primeFactors;
+                    return factors;
                 }
         );
     }
 
-    public static Iterator<Long> factorsIterator(long n) {
-        return new PrimeFactors(n);
-    }
-
-    private static class PrimeFactors implements Iterator<Long> {
+    public static class FactorsIterator implements Iterator<Long> {
         long n;
-        Iterator<Long> primes = primesIterator();
+        Iterator<Long> primes = new Primes.PrimesIterator();
 
-        public PrimeFactors(long n) {
+        public FactorsIterator(long n) {
             this.n = n;
         }
 
@@ -111,6 +113,8 @@ public class Factors {
     }
 
     public static void main(String[] args) {
+        verbose = true;
         makeTable(1_000_000);
+        verbose = false;
     }
 }

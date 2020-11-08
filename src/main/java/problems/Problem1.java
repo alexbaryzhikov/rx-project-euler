@@ -1,6 +1,6 @@
 package problems;
 
-import io.reactivex.rxjava3.core.Observable;
+import static util.Utils.nats;
 
 /*
 If we list all the natural numbers below 10 that are multiples of 3 or 5,
@@ -10,22 +10,10 @@ all the multiples of 3 or 5 below 1000.
 
 public class Problem1 {
 
-    private static Observable<Integer> divOf(int x, int limit) {
-        return Observable.generate(() -> 1, (i, emitter) -> {
-            int next = i + x;
-            if (next < limit) {
-                emitter.onNext(next);
-            } else {
-                emitter.onComplete();
-            }
-            return next;
-        });
-    }
-
     public static void main(String[] args) {
-        Observable.merge(divOf(3, 1000), divOf(5, 1000))
-                .distinct()
-                .reduce(0, Integer::sum)
+        nats(1, 1000)
+                .filter(it -> it % 3 == 0 || it % 5 == 0)
+                .reduce(0L, Long::sum)
                 .blockingSubscribe(System.out::println);
     }
 }

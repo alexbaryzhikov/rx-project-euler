@@ -115,6 +115,7 @@ public class Problem13 {
         Observable.fromArray(numbers.split("\n"))
                 .map(BigInteger::new)
                 .reduce(BigInteger.ZERO, BigInteger::add)
+                .map(it -> it.toString().substring(0, 10))
                 .blockingSubscribe(System.out::println);
     }
 }

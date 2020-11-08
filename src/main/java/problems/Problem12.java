@@ -46,6 +46,6 @@ public class Problem12 {
 
         source.filter(it -> numDivisors(it) > 500)
                 .firstElement()
-                .blockingSubscribe(System.out::print);
+                .blockingSubscribe(System.out::println);
     }
 }

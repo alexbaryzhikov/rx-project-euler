@@ -16,9 +16,9 @@ Find the product abc.
 public class Problem9 {
 
     public static void main(String[] args) {
-        Observable.range(1, 1000)
-                .flatMap(x -> Observable.range(x + 1, 1000)
-                        .flatMap(y -> Observable.range(y + 1, 1000)
+        Observable.range(1, 1000 / 3)
+                .flatMap(x -> Observable.range(x + 1, (1000 - x) / 2)
+                        .flatMap(y -> Observable.range(y + 1, 1000 - x - y)
                                 .filter(z -> x * x + y * y == z * z)
                                 .filter(z -> x + y + z == 1000)
                                 .map(z -> x * y * z)))

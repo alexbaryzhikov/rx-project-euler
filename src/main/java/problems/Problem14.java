@@ -21,8 +21,6 @@ NOTE: Once the chain starts the terms are allowed to go above one million.
 
 import io.reactivex.rxjava3.core.Observable;
 
-import java.util.Arrays;
-
 import static util.Utils.nats;
 
 public class Problem14 {
@@ -45,6 +43,7 @@ public class Problem14 {
         nats(13, 1_000_000)
                 .flatMapSingle(x -> collatz(x).count().map(n -> new long[]{x, n}))
                 .reduce(new long[]{0, 0}, (max, item) -> max[1] < item[1] ? item : max)
-                .blockingSubscribe(it -> System.out.println(Arrays.toString(it)));
+                .map(a -> a[0])
+                .blockingSubscribe(System.out::println);
     }
 }

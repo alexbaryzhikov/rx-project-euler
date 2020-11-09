@@ -15,7 +15,8 @@ public class Problem15 {
         return Observable.zip(
                 Observable.range(a[0] + 1, n - a[0]),
                 Observable.range(1, a[1]),
-                (i, j) -> new long[]{i, j})
+                (i, j) -> new long[]{i, j}
+        )
                 .reduce(1L, (x, p) -> x * p[0] / p[1])
                 .blockingGet();
     }

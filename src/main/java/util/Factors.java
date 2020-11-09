@@ -82,10 +82,12 @@ public class Factors {
 
     public static class FactorsIterator implements Iterator<Long> {
         long n;
+        long p;
         Iterator<Long> primes = new Primes.PrimesIterator();
 
         public FactorsIterator(long n) {
             this.n = n;
+            this.p = primes.next();
         }
 
         @Override
@@ -98,14 +100,12 @@ public class Factors {
             if (n <= 1) {
                 throw new NoSuchElementException();
             }
-            long p;
-            if (n >= largest.length) {
-                p = primes.next();
+            if (n < largest.length) {
+                p = largest[(int) n];
+            } else {
                 while (n % p != 0) {
                     p = primes.next();
                 }
-            } else {
-                p = largest[(int) n];
             }
             n /= p;
             return p;

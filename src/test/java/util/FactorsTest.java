@@ -6,11 +6,10 @@ import org.junit.Test;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
+import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
 import static util.Factors.*;
 
 public class FactorsTest {
@@ -25,28 +24,25 @@ public class FactorsTest {
 
     @Test
     public void generate_prime_factors_small() {
-        makeTable(1000);
         List<Long> result = factors(720)
                 .collect(ArrayList<Long>::new, ArrayList::add)
                 .blockingGet();
-        assertEquals(Arrays.asList(5L, 3L, 3L, 2L, 2L, 2L, 2L), result);
+        assertThat(result).containsExactly(5L, 3L, 3L, 2L, 2L, 2L, 2L);
 
         result = factors(37)
                 .collect(ArrayList<Long>::new, ArrayList::add)
                 .blockingGet();
-        assertEquals(Collections.singletonList(37L), result);
+        assertThat(result).containsExactly(37L);
     }
 
     @Test
     public void generate_prime_factors_large() {
-        makeTable(1_000_001);
-
         List<Long> result = factors(72_990_720)
                 .distinct()
                 .sorted()
                 .collect(ArrayList<Long>::new, ArrayList::add)
                 .blockingGet();
-        assertEquals(Arrays.asList(2L, 3L, 5L, 11L), result);
+        assertThat(result).containsExactly(2L, 3L, 5L, 11L);
     }
 
     @AfterClass

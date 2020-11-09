@@ -4,8 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 import problems.*;
 
-import static org.junit.Assert.assertEquals;
+import java.util.function.Consumer;
 
+import static org.junit.Assert.assertEquals;
 
 public class ProblemsTest {
     private final StdOutInterceptor stdOutInterceptor = new StdOutInterceptor();
@@ -17,82 +18,82 @@ public class ProblemsTest {
 
     @Test
     public void problem1() {
-        Problem1.main(null);
-        String result = stripNewline(stdOutInterceptor.capture());
-        assertEquals("233168", result);
+        test(Problem1::main, "233168");
     }
 
     @Test
     public void problem2() {
-        Problem2.main(null);
-        String result = stripNewline(stdOutInterceptor.capture());
-        assertEquals("4613732", result);
+        test(Problem2::main, "4613732");
     }
 
     @Test
     public void problem3() {
-        Problem3.main(null);
-        String result = stripNewline(stdOutInterceptor.capture());
-        assertEquals("6857", result);
+        test(Problem3::main, "6857");
+    }
+
+    @Test
+    public void problem4() {
+        test(Problem4::main, "906609");
+    }
+
+    @Test
+    public void problem5() {
+        test(Problem5::main, "232792560");
+    }
+
+    @Test
+    public void problem6() {
+        test(Problem6::main, "25164150");
+    }
+
+    @Test
+    public void problem7() {
+        test(Problem7::main, "104743");
     }
 
     @Test
     public void problem8() {
-        Problem8.main(null);
-        String result = stripNewline(stdOutInterceptor.capture());
-        assertEquals("23514624000", result);
+        test(Problem8::main, "23514624000");
     }
 
     @Test
     public void problem9() {
-        Problem9.main(null);
-        String result = stripNewline(stdOutInterceptor.capture());
-        assertEquals("31875000", result);
+        test(Problem9::main, "31875000");
     }
 
     @Test
     public void problem10() {
-        Problem10.main(null);
-        String result = stripNewline(stdOutInterceptor.capture());
-        assertEquals("142913828922", result);
+        test(Problem10::main, "142913828922");
     }
 
     @Test
     public void problem11() {
-        Problem11.main(null);
-        String result = stripNewline(stdOutInterceptor.capture());
-        assertEquals("70600674", result);
+        test(Problem11::main, "70600674");
     }
 
     @Test
     public void problem12() {
-        Problem12.main(null);
-        String result = stripNewline(stdOutInterceptor.capture());
-        assertEquals("76576500", result);
+        test(Problem12::main, "76576500");
     }
 
     @Test
     public void problem13() {
-        Problem13.main(null);
-        String result = stripNewline(stdOutInterceptor.capture());
-        assertEquals("5537376230", result);
+        test(Problem13::main, "5537376230");
     }
 
     @Test
     public void problem14() {
-        Problem14.main(null);
-        String result = stripNewline(stdOutInterceptor.capture());
-        assertEquals("837799", result);
+        test(Problem14::main, "837799");
     }
 
     @Test
     public void problem15() {
-        Problem15.main(null);
-        String result = stripNewline(stdOutInterceptor.capture());
-        assertEquals("137846528820", result);
+        test(Problem15::main, "137846528820");
     }
 
-    private String stripNewline(String s) {
-        return s.replace(System.lineSeparator(), "");
+    private void test(Consumer<String[]> f, String expected) {
+        f.accept(null);
+        String result = stdOutInterceptor.capture().replace(System.lineSeparator(), "");
+        assertEquals(expected, result);
     }
 }

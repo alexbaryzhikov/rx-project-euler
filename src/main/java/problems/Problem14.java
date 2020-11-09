@@ -19,31 +19,30 @@ Which starting number, under one million, produces the longest chain?
 NOTE: Once the chain starts the terms are allowed to go above one million.
 */
 
-import io.reactivex.rxjava3.core.Observable;
-
 import static util.Utils.nats;
 
 public class Problem14 {
 
-    private static Observable<Long> collatz(long x) {
-        return Observable.generate(
-                () -> x,
-                (i, emitter) -> {
-                    emitter.onNext(i);
-                    if (i != 1) {
-                        return i % 2 == 0 ? i / 2 : i * 3 + 1;
-                    } else {
-                        emitter.onComplete();
-                        return 0L;
-                    }
-                });
+    private static long collatzSize(long x) {
+        long size = 1;
+        while (x != 1) {
+            x = x % 2 == 0 ? x / 2 : x * 3 + 1;
+            size++;
+        }
+        return size;
     }
 
     public static void main(String[] args) {
-        nats(13, 1_000_000)
-                .flatMapSingle(x -> collatz(x).count().map(n -> new long[]{x, n}))
-                .reduce(new long[]{0, 0}, (max, item) -> max[1] < item[1] ? item : max)
-                .map(a -> a[0])
+        nats(2, 1_000_000)
+                .reduce(new long[]{0, 0}, (acc, x) -> {
+                    long sz = collatzSize(x);
+                    if (acc[0] < sz) {
+                        acc[0] = sz;
+                        acc[1] = x;
+                    }
+                    return acc;
+                })
+                .map(a -> a[1])
                 .blockingSubscribe(System.out::println);
     }
 }

@@ -1,4 +1,4 @@
-package util;
+package problems;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

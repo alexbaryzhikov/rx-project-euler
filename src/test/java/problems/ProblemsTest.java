@@ -1,8 +1,7 @@
-package util;
+package problems;
 
 import org.junit.Before;
 import org.junit.Test;
-import problems.*;
 
 import java.util.function.Consumer;
 

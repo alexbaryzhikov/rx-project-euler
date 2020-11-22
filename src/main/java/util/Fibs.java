@@ -11,13 +11,12 @@ public class Fibs {
                 FibsIterator::new,
                 (fibs, emitter) -> {
                     emitter.onNext(fibs.next());
-                    return fibs;
                 });
     }
 
     public static class FibsIterator implements Iterator<Long> {
-        long a = 0;
-        long b = 1;
+        private long a = 0;
+        private long b = 1;
 
         @Override
         public Long next() {

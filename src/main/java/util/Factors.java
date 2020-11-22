@@ -75,15 +75,14 @@ public class Factors {
                     } else {
                         emitter.onComplete();
                     }
-                    return factors;
                 }
         );
     }
 
     public static class FactorsIterator implements Iterator<Long> {
-        long n;
-        long p;
-        Iterator<Long> primes = new Primes.PrimesIterator();
+        private long n;
+        private long p;
+        private final Iterator<Long> primes = new Primes.PrimesIterator();
 
         public FactorsIterator(long n) {
             this.n = n;

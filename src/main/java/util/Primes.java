@@ -11,17 +11,16 @@ public class Primes {
                 PrimesIterator::new,
                 (primes, emitter) -> {
                     emitter.onNext(primes.next());
-                    return primes;
                 }
         );
     }
 
     public static class PrimesIterator implements Iterator<Long> {
-        long n = 2; // next candidate number
-        long p = 3; // next base prime
-        long q = 9; // square of the next base prime to keep track of in the sieve
-        Map<Long, Long> sieve = new HashMap<>();
-        List<Long> basePrimes = new ArrayList<>();
+        private long n = 2; // next candidate number
+        private long p = 3; // next base prime
+        private long q = 9; // square of the next base prime to keep track of in the sieve
+        private final Map<Long, Long> sieve = new HashMap<>();
+        private final List<Long> basePrimes = new ArrayList<>();
 
         @Override
         public Long next() {

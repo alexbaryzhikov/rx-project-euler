@@ -1,8 +1,8 @@
 package util;
 
 import io.reactivex.rxjava3.core.*;
+import io.reactivex.rxjava3.functions.Predicate;
 
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 public class Utils {
@@ -39,11 +39,11 @@ public class Utils {
     }
 
     public static ObservableTransformer<String, String> grep(String regex) {
-        Predicate<String> p = Pattern.compile(regex).asPredicate();
+        java.util.function.Predicate<String> p = Pattern.compile(regex).asPredicate();
         return upstream -> upstream.filter(p::test);
     }
 
-    public static ObservableConverter<Long, Maybe<Long>> first(io.reactivex.rxjava3.functions.Predicate<Long> p) {
+    public static ObservableConverter<Long, Maybe<Long>> first(Predicate<Long> p) {
         return upstream -> upstream.filter(p).firstElement();
     }
 }

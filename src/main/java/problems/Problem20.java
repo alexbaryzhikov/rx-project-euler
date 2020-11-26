@@ -6,6 +6,10 @@ import java.math.BigInteger;
 
 import static util.Utils.nats;
 
+/*
+Find the sum of the digits in the number 100!
+*/
+
 public class Problem20 {
 
     public static void main(String[] args) {

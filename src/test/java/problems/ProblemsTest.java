@@ -130,6 +130,11 @@ public class ProblemsTest {
         test(Problem23::main, "4179871");
     }
 
+    @Test
+    public void problem24() {
+        test(Problem24::main, "2783915460");
+    }
+
     private void test(Consumer<String[]> f, String expected) {
         f.accept(null);
         String result = stdOutInterceptor.capture().replace(System.lineSeparator(), "");

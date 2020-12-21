@@ -2,14 +2,11 @@ package util;
 
 import io.reactivex.rxjava3.core.Observable;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class Permutations {
 
-    public static <T> Observable<List<T>> permutations(List<T> items, int r) {
+    public static <T> Observable<List<T>> permutations(Collection<T> items, int r) {
         return Observable.generate(
                 () -> new PermutationsIterator<>(items, r),
                 (permutations, emitter) -> {
@@ -21,21 +18,22 @@ public class Permutations {
                 });
     }
 
-    public static <T> Observable<List<T>> permutations(List<T> items) {
+    public static <T> Observable<List<T>> permutations(Collection<T> items) {
         return permutations(items, items.size());
     }
 
     public static class PermutationsIterator<T> implements Iterator<List<T>> {
-        private final List<T> items;
+        private final T[] items;
         private final int r;
         private final int n;
         private final int[] indices;
         private final int[] cycles;
-        private int pivot;
+        private int k;
         private List<T> permutation;
 
-        public PermutationsIterator(List<T> items, int r) {
-            this.items = items;
+        @SuppressWarnings("unchecked")
+        public PermutationsIterator(Collection<T> items, int r) {
+            this.items = (T[]) items.toArray();
             this.r = r;
             n = items.size();
             indices = new int[n];
@@ -46,10 +44,18 @@ public class Permutations {
             for (int i = 0; i < r; i++) {
                 cycles[i] = n - i;
             }
-            pivot = r - 1;
-            if (!items.isEmpty() && r > 0) {
-                permutation = items.subList(0, r);
+            k = r - 1;
+            if (!items.isEmpty() && r > 0 && r <= n) {
+                permutation = getPermutation();
             }
+        }
+
+        private List<T> getPermutation() {
+            List<T> result = new ArrayList<>();
+            for (int i = 0; i < r; i++) {
+                result.add(items[indices[i]]);
+            }
+            return result;
         }
 
         @Override
@@ -65,18 +71,15 @@ public class Permutations {
             List<T> result = permutation;
             permutation = null;
 
-            for (; pivot >= 0; pivot--) {
-                cycles[pivot] -= 1;
-                if (cycles[pivot] == 0) {
-                    rotateLeft(indices, pivot, n - 1);
-                    cycles[pivot] = n - pivot;
+            for (; k >= 0; k--) {
+                cycles[k] -= 1;
+                if (cycles[k] == 0) {
+                    rotateLeft(indices, k, n - 1);
+                    cycles[k] = n - k;
                 } else {
-                    swap(indices, pivot, n - cycles[pivot]);
-                    pivot = r - 1;
-                    permutation = new ArrayList<>();
-                    for (int i = 0; i < r; i++) {
-                        permutation.add(items.get(indices[i]));
-                    }
+                    swap(indices, k, n - cycles[k]);
+                    k = r - 1;
+                    permutation = getPermutation();
                     break;
                 }
             }

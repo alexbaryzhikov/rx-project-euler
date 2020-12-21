@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -18,6 +17,7 @@ public class FactorsTest {
     public void make_and_load_table() {
         makeTable(1000);
         int[] largest = Factors.largest;
+        Factors.largest = new int[0];
         loadTable(1000);
         assertArrayEquals(largest, Factors.largest);
     }
@@ -47,13 +47,11 @@ public class FactorsTest {
 
     @AfterClass
     public static void after() {
-        for (int i : Arrays.asList(1000, 1_000_001)) {
-            File f = new File(DATA_DIR, FILE_BASE_NAME + i);
-            if (f.delete()) {
-                System.out.println("Deleted " + f.getAbsolutePath());
-            } else {
-                System.err.println("Unable to delete " + f.getAbsolutePath());
-            }
+        File f = new File(DATA_DIR, FILE_BASE_NAME + 1000);
+        if (f.delete()) {
+            System.out.println("Deleted " + f.getAbsolutePath());
+        } else {
+            System.err.println("Unable to delete " + f.getAbsolutePath());
         }
     }
 }

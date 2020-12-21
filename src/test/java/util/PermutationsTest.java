@@ -63,4 +63,11 @@ public class PermutationsTest {
                 Arrays.asList(2, 1, 0));
         assertEquals(expected, result);
     }
+
+    @Test
+    public void permutations_of_size_4() {
+        List<List<Integer>> result = permutations(Arrays.asList(0, 1, 2), 4)
+                .toList().blockingGet();
+        assertEquals(Collections.<List<Integer>>emptyList(), result);
+    }
 }

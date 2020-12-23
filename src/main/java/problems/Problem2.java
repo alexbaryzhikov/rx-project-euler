@@ -10,7 +10,7 @@ By considering the terms in the Fibonacci sequence whose values do not exceed fo
 find the sum of the even-valued terms.
 */
 
-import static util.Fibs.fibs;
+import static util.Utils.fibs;
 import static util.Utils.upTo;
 
 public class Problem2 {

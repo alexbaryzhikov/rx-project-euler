@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.core.Observable;
 
 import java.util.Arrays;
 
-import static util.Permutations.permutations;
+import static util.Utils.permutations;
 
 /*
 A permutation is an ordered arrangement of objects. For example, 3124 is one

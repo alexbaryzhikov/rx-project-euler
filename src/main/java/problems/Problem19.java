@@ -1,9 +1,8 @@
 package problems;
 
-import util.Dates;
-
-import static util.Dates.Month.JAN;
-import static util.Dates.Weekday.SUN;
+import static com.alexb.iterators.date.Month.JAN;
+import static com.alexb.iterators.date.Weekday.SUN;
+import static util.Utils.days;
 
 /*
 You are given the following information, but you may
@@ -26,10 +25,10 @@ the twentieth century (1 Jan 1901 to 31 Dec 2000)?
 public class Problem19 {
 
     public static void main(String[] args) {
-        Dates.dates()
-                .skipWhile(it -> !(it.day == 1 && it.month == JAN && it.year == 1901))
-                .takeUntil(it -> it.day == 1 && it.month == JAN && it.year == 2001)
-                .filter(it -> it.weekday == SUN && it.day == 1)
+        days()
+                .skipWhile(it -> !(it.monthday == 1 && it.month == JAN && it.year == 1901))
+                .takeUntil(it -> it.monthday == 1 && it.month == JAN && it.year == 2001)
+                .filter(it -> it.weekday == SUN && it.monthday == 1)
                 .count()
                 .blockingSubscribe(System.out::println);
     }

@@ -7,7 +7,7 @@ we can see that the 6th prime is 13.
 What is the 10001st prime number?
 */
 
-import static util.Primes.primes;
+import static util.Utils.primes;
 
 public class Problem7 {
 

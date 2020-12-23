@@ -11,7 +11,7 @@ therefore d(220) = 284. The proper divisors of 284 are 1, 2, 4, 71 and 142; so d
 Evaluate the sum of all the amicable numbers under 10000.
 */
 
-import static util.Divisors.divisors;
+import static util.Utils.divisors;
 import static util.Utils.nats;
 
 public class Problem21 {

@@ -4,9 +4,7 @@ import io.reactivex.rxjava3.core.Observable;
 
 import java.util.List;
 
-import static util.Divisors.divisors;
-import static util.Utils.nats;
-import static util.Utils.sumOf;
+import static util.Utils.*;
 
 /*
 A perfect number is a number for which the sum of its proper divisors is

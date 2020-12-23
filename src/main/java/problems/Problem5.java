@@ -15,7 +15,6 @@ import io.reactivex.rxjava3.core.Single;
 import java.util.HashMap;
 import java.util.Map;
 
-import static util.Factors.factors;
 import static util.Utils.*;
 
 public class Problem5 {

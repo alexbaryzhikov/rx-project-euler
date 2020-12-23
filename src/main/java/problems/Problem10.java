@@ -1,6 +1,6 @@
 package problems;
 
-import static util.Primes.primes;
+import static util.Utils.primes;
 import static util.Utils.upTo;
 
 /*

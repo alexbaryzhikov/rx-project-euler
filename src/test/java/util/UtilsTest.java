@@ -7,8 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static util.Divisors.divisors;
-import static util.Primes.primes;
 import static util.Utils.*;
 
 public class UtilsTest {

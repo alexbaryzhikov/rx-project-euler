@@ -9,10 +9,14 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven {
+        url "https://dl.bintray.com/alexb/iterator-pack"
+    }
 }
 
 dependencies {
     implementation 'io.reactivex.rxjava3:rxjava:3.0.8'
+    implementation 'com.alexb:iterator-pack:1.0.0'
     testImplementation 'junit:junit:4.13'
     testImplementation 'com.google.truth:truth:1.1'
 }

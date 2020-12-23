@@ -52,9 +52,11 @@ public class Utils {
     }
 
     public static Observable<Day> days() {
-        return Observable.generate(DaysIterator::new, (dateIterator, dateEmitter) -> {
-            dateEmitter.onNext(dateIterator.next());
-        });
+        return Observable.generate(
+                DaysIterator::new,
+                (days, emitter) -> {
+                    emitter.onNext(days.next());
+                });
     }
 
     public static Observable<Long> divisors(long n) {

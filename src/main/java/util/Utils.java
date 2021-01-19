@@ -128,4 +128,12 @@ public class Utils {
     public static long productOf(Observable<Long> o) {
         return o.reduce(1L, (a, b) -> a * b).blockingGet();
     }
+
+    public static void timeIt(Runnable f) {
+        long t0 = System.nanoTime();
+        f.run();
+        long t1 = System.nanoTime();
+        long d = t1 - t0;
+        System.out.printf("%d.%d s", d / 1000000000, (d % 1000000000) / 1000000);
+    }
 }

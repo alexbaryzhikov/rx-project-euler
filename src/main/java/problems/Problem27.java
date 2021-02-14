@@ -3,6 +3,7 @@ package problems;
 import io.reactivex.rxjava3.core.Observable;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static util.Utils.primes;
@@ -40,13 +41,16 @@ public class Problem27 {
     }
 
     public static void main(String[] args) {
-        primesSet = primes()
+        List<Long> primesList = primes()
                 .takeWhile(n -> n < 100_000)
-                .collect(HashSet<Long>::new, HashSet::add)
+                .toList()
                 .blockingGet();
 
+        primesSet = new HashSet<>(primesList);
+
         Observable.range(-999, 2000 - 1)
-                .flatMap(a -> Observable.rangeLong(-1000, 2000 + 1)
+                .flatMap(a -> Observable.fromIterable(primesList)
+                        .takeWhile(p -> p < 1000)
                         .map(b -> new long[]{a, b}))
                 .map(Problem27::primesCount)
                 .reduce(new long[]{0, 0, 0}, (abnMax, abn) -> abn[2] > abnMax[2] ? abn : abnMax)
